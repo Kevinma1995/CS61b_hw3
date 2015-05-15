@@ -13,29 +13,66 @@ public class SortedComparableList {
 
     /** A list with head HEAD0 and tail TAIL0. */
     public SortedComparableList(Comparable head0, SortedComparableList tail0) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        head = head0;
+        tail = tail0;
     }
 
     /** A list with null tail, and head = 0. */
     public SortedComparableList(){
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+    	head = 0;
+        tail = null;
     }
 
     /** Inserts Comparable c into its correct location in this list. */
     public void insert(Comparable c) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+    	
+    	//if tail is null, we're at the end of the list. 
+    	//C is largest iteam
+    	if(tail == null){
+    		tail = new SortedComparableList(c, null);
+    	} else {
+    		int comp = tail.head.compareTo(c);
+        	if(comp > 0){
+        		SortedComparableList newTail = new SortedComparableList(c, tail);
+        		tail = newTail;
+        	} else {
+        		tail.insert(c);
+        	}
+    	} 	
     }
 
     /** Returns the i-th int in this list.
      *  The first element, which is in location 0, is the 0th element.
      *  Assume i takes on the values [0, length of list - 1]. */
     public Comparable get(int i) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+    	if (i == 0){
+    		return head;
+    	} else {
+    		return tail.get(i - 1);
+    	}
     }
 
     /** Adds every item in THAT to this list. */
     public void extend(SortedComparableList that) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        if(that == null || that.head == null){
+        	return;
+        }
+        
+        //if tail is null, everything else in THAT is larger
+        //so just append
+    	if(tail == null){
+    		tail = that;
+    	} else {
+    		int comp = tail.head.compareTo(that.head);
+        	if(comp > 0){
+        		SortedComparableList newTail = new SortedComparableList(that.head, tail);
+        		tail = newTail;
+        		tail.extend(that.tail);
+        	} else {
+        		tail.extend(that);
+        	}
+    	}
+        
     }
 
     /** Returns a list consisting of the elements of L starting from
