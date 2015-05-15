@@ -81,7 +81,14 @@ public class SortedComparableList {
       *
       * This method should NOT modify L. */
     public static SortedComparableList subTail(SortedComparableList L, int start) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        if (start == 0) {
+        	if(L != null){
+        		return new SortedComparableList(L.head, subTail(L.tail, 0));
+        	}
+        	else return null;
+        } else {
+        	return subTail(L.tail, start - 1);
+        }
     }
 
     /** Returns the sublist consisting of LEN items from list L,
@@ -91,12 +98,18 @@ public class SortedComparableList {
      *  Assume START and END are >= 0.
      */
     public static SortedComparableList sublist(SortedComparableList L, int start, int len) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+    	SortedComparableList sub = subTail(L, start);
+    	expungeTail(sub, len);
+    	return sub;
     }
 
     /** Removes items from L at position len+1 and later. */
     public static void expungeTail(SortedComparableList L, int len) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        if (len == 0) {
+        	L.tail = null;
+        } else {
+        	expungeTail(L.tail, len - 1);
+        }
     }
 
     /**
@@ -112,7 +125,14 @@ public class SortedComparableList {
      *  output list is [ 0 1 3 4 ].
      **/
     public void squish() {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+    	if(tail != null){
+    		if(head == tail.head){
+    			tail = tail.tail;
+    			this.squish();
+    		} else {
+    			tail.squish();
+    		}
+    	}    
     }
 
     /** Duplicates each Comparable so that for every original
@@ -129,6 +149,12 @@ public class SortedComparableList {
      *  duplicate.
      **/
     public void twin() {
+    	if(tail == null){
+    		this.insert(head);
+    	} else {
+    		tail.twin();
+    		this.insert(head);
+    	}
         // REPLACE THIS LINE WITH YOUR SOLUTION
     }
 
