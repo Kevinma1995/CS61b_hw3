@@ -13,6 +13,7 @@ public class SortedComparableList {
 
     /** A list with head HEAD0 and tail TAIL0. */
     public SortedComparableList(Comparable head0, SortedComparableList tail0) {
+    	//this allows you to create unsorted lists...
         head = head0;
         tail = tail0;
     }
